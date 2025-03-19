@@ -1,14 +1,12 @@
-//your JS code here. If required.
 const output = document.getElementById('output');
 
-// ✅ Display initial "Loading..." row
+// ✅ Display initial "Loading..." row with id="loading"
 output.innerHTML = `
-  <tr>
+  <tr id="loading">
     <td colspan="2" class="text-center">Loading...</td>
   </tr>
 `;
 
-// ✅ Create 3 promises that resolve after a random delay between 1 and 3 seconds
 const createPromise = (index) => {
   const delay = Math.random() * (3 - 1) + 1; // Random delay between 1 and 3 seconds
   return new Promise((resolve) => {
@@ -22,10 +20,10 @@ const promise1 = createPromise(1);
 const promise2 = createPromise(2);
 const promise3 = createPromise(3);
 
-// ✅ Wait for all promises to resolve using Promise.all()
 Promise.all([promise1, promise2, promise3]).then((results) => {
   // ✅ Remove loading row
-  output.innerHTML = '';
+  const loadingRow = document.getElementById('loading');
+  if (loadingRow) loadingRow.remove();
 
   // ✅ Add resolved promise data to the table
   let totalTime = 0;
@@ -38,7 +36,7 @@ Promise.all([promise1, promise2, promise3]).then((results) => {
     `;
     output.appendChild(row);
 
-    // Track the total time taken (maximum of the resolved times)
+    // ✅ Track the total time taken (maximum of the resolved times)
     totalTime = Math.max(totalTime, parseFloat(result.time));
   });
 
